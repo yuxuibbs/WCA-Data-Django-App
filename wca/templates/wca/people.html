@@ -1,38 +1,32 @@
 {% extends 'wca/base.html' %}
 
 {% block content %}
-
 <article>
-  <header>
-    <div class="row">
-      <div class="col-sm-11">
-        <h2>WCA Members (people who have competed in an official WCA competition)</h2>
-      </div>
-      <div class="col-sm-1">
-        {% if user.is_authenticated %}
-          <a class="btn btn-outline-secondary" href="{% url 'person_new' %}">Add new</a>
-        {% endif %}
-      </div>
-    </div>
-  </header>
+    <header>
+        <h2>
+            WCA Members (people who have competed in an official WCA competition)
+        </h2>
+    </header>
+    {% include 'wca/pagination.html' %}
 
-  {% include 'wca/pagination.html' %}
-
-  {% if people %}
-  <ul>
-
-    {% for person in people %}
-      <li>
-        <a href="{% url 'person_detail' person.pk %}">{{ person.person_name | safe }}</a> [{{ person.person_identifier }}]
-      </li>
-    {% endfor %}
-
-  </ul>
-  {% else %}
-  <p>No people are available to view.</p>
-  {% endif %}
-
-  <p>page count: {{ people.count }}</p>
+    {% if people %}
+    <ul>
+        {% for person in people %}
+        <li>
+            <a href="{% url 'person_detail' person.pk %}">
+                {{ person.person_name | safe }}
+            </a>
+            [{{ person.person_identifier }}]
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>
+        No people are available to view.
+    </p>
+    {% endif %}
+    <p>
+        page count: {{ people.count }}
+    </p>
 </article>
-
 {% endblock content %}

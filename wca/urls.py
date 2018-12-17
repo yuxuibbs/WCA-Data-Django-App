@@ -6,7 +6,6 @@ urlpatterns = [
 
     path('people/', views.PersonListView.as_view(), name='people'),
     path('person/<int:pk>/', views.PersonDetailView.as_view(), name='person_detail'),
-    path('person/new/', views.PersonCreateView.as_view(), name='person_new'),
     path('person/<int:pk>/delete/', views.PersonDeleteView.as_view(), name='person_delete'),
     path('person/<int:pk>/update/', views.PersonUpdateView.as_view(), name='person_update'),
     path('person/filter/', views.PersonFilterView.as_view(), name='person_filter'), 

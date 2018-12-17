@@ -64,8 +64,7 @@ class ResultCreateView(generic.View):
         if form.is_valid():
             result_info = form.save(commit=False)
             result_info.save()
-            for competition in form.cleaned_data['competition']:
-                Result.objects.create(result=result_info, competition=competition)
+            Result.objects.create(result=result_info)
             return HttpResponseRedirect(result_info.get_absolute_url())
         return render(request, 'wca/result_new.html', {'form': form})
 
@@ -157,38 +156,6 @@ class PersonDetailView(generic.DetailView):
     context_object_name = 'person'
     template_name = 'wca/person_detail.html'
 
-
-@method_decorator(login_required, name='dispatch')
-class PersonCreateView(generic.View):
-    model = Person
-    form_class = PersonForm
-    success_message = "Person created successfully"
-    template_name = 'wca/person_new.html'
-
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
-
-
-    def post(self, request):
-        personForm = PersonForm(request.POST)
-        resultForm = ResultForm(request.POST)
-        print(personForm.is_valid())
-        print(resultForm.is_valid())
-        if personForm.is_valid() and resultForm.is_valid():
-            person_info = personForm.save(commit=False)
-            person_info.save()
-            result_info = resultForm.save(commit=False)
-            result_info.save()
-            print(person_info)
-            print(result_info)
-            # Result.objects.create(person=person_info, competition=competition)
-            return HttpResponseRedirect(person_info.get_absolute_url())
-        return render(request, 'wca/person_new.html', {'personForm': personForm, 'resultForm': resultForm})
-
-    def get(self, request):
-        personForm = PersonForm()
-        resultForm = ResultForm()
-        return render(request, 'wca/person_new.html', {'personForm': personForm, 'resultForm': resultForm})
 
 @method_decorator(login_required, name='dispatch')
 class PersonUpdateView(generic.UpdateView):
