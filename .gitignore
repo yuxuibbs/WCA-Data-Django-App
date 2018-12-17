@@ -90,3 +90,5 @@ venv.bak/
 
 ### Django secrets ###
 **/secrets.py
+
+*__init__.py

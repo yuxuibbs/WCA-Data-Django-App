@@ -1,0 +1,97 @@
+{% extends 'wca/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<header>
+    <div class="row">
+        <div class="col-sm-11">
+            <h2>
+                Official WCA Results
+            </h2>
+        </div>
+        <div class="col-sm-1">
+            {% if user.is_authenticated %}
+            <a class="btn btn-outline-secondary" href="{% url 'result_new' %}">
+                Add new
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</header>
+<div class="row">
+    <div class="col-sm-3">
+        <div class="px-2 py-2" style="border:1px solid #8E8D8A;">
+            <form action="" method="get">
+                {{ filter.form | crispy }}
+                <button class="btn btn-outline-success" type="submit">
+                    Filter
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="col-sm-9">
+        {% for result in object_list %}
+        <h4>
+            {{ result.person_name | safe }}
+        </h4>
+        <h5>
+            <a href="{% url 'result_detail' result.pk %}">
+                View result details
+            </a>
+        </h5>
+        {% if result.competition %}
+        <p>
+            <strong>
+                Competition:
+            </strong>
+            {{ result.competition }}
+        </p>
+        {% endif %}
+        {% if result.event %}
+        <p>
+            <strong>
+                Event:
+            </strong>
+            {{ result.event }}
+        </p>
+        {% endif %}
+        {% if result.event_format %}
+        <p>
+            <strong>
+                Event Format
+            </strong>
+            {{ result.event_format }}
+        </p>
+        {% endif %}
+        {% if result.round_type %}
+        <p>
+            <strong>
+                Round Type:
+            </strong>
+            {{ result.round_type }}
+        </p>
+        {% endif %}
+        {% if result.average %}
+        <p>
+            <strong>
+                Average (centiseconds):
+            </strong>
+            {{ result.average | safe }}
+        </p>
+        {% endif %}
+        {% if result.best %}
+        <p>
+            <strong>
+                Best Single (centiseconds):
+            </strong>
+            {{ result.best | safe }}
+        </p>
+        {% endif %}
+        <hr/>
+        {% empty %}
+      Select one or more filters relevant to your search and then click "filter".
+    {% endfor %}
+    </div>
+</div>
+{% endblock content %}

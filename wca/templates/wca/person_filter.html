@@ -1,0 +1,46 @@
+{% extends 'wca/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-3">
+        <div class="px-2 py-2" style="border:1px solid #8E8D8A;">
+            <form action="" method="get">
+                {{ filter.form | crispy }}
+                <button class="btn btn-outline-success" type="submit">
+                    Filter
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="col-sm-9">
+        {% for person in object_list %}
+        <h4>
+            <a href="{% url 'person_detail' person.pk %}">
+                {{ person.person_name | safe }} - {{ person.person_identifier }}
+            </a>
+        </h4>
+        {% if person.country %}
+        <p>
+            <strong>
+                Country
+            </strong>
+            {{ person.country }}
+        </p>
+        {% endif %}
+        {% if person.gender %}
+        <p>
+            <strong>
+                Gender:
+            </strong>
+            {{ person.gender }}
+        </p>
+        {% endif %}
+        <hr/>
+        {% empty %}
+      Select one or more filters relevant to your search and then click "filter".
+    {% endfor %}
+    </div>
+</div>
+{% endblock content %}

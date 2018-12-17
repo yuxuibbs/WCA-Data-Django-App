@@ -1,0 +1,90 @@
+{% extends 'wca/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<header>
+    <h2>
+        New Result
+    </h2>
+</header>
+<form method="post" novalidate="">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-sm-6">
+            {{ form.person_name|as_crispy_field }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            {{ form.person|as_crispy_field }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            {{ form.competition|as_crispy_field }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            {{ form.event|as_crispy_field }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            {{ form.round_type|as_crispy_field }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            {{ form.pos|as_crispy_field }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            {{ form.best|as_crispy_field }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            {{ form.average|as_crispy_field }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            {{ form.event_format|as_crispy_field }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            {{ form.value1|as_crispy_field }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            {{ form.value2|as_crispy_field }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            {{ form.value3|as_crispy_field }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            {{ form.value4|as_crispy_field }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            {{ form.value5|as_crispy_field }}
+        </div>
+    </div>
+    <button class="btn btn-outline-success" type="submit">
+        Add
+    </button>
+    <a class="btn btn-outline-secondary" href="{% url 'result_filter' %}">
+        cancel
+    </a>
+</form>
+{% endblock content %}

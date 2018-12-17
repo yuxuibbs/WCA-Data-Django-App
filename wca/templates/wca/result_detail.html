@@ -1,0 +1,207 @@
+{% extends 'wca/base.html' %}
+      
+{% block content %}
+<header>
+    <div class="row">
+        <div class="col-sm-10">
+            <h2>
+                {{ result.person_name | safe }}
+            </h2>
+        </div>
+        <div class="col-sm-1">
+            {% if user.is_authenticated %}
+            <a class="btn btn-outline-secondary" href="{% url 'result_update' result.pk %}">
+                edit
+            </a>
+            {% endif %}
+        </div>
+        <div class="col-sm-1">
+            {% if user.is_authenticated %}
+            <a class="btn btn-outline-danger" href="{% url 'result_delete' result.pk %}">
+                delete
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</header>
+{% if result.person %}
+<div class="row">
+    <div class="col-sm-2">
+        <p>
+            <strong>
+                WCA ID
+            </strong>
+        </p>
+    </div>
+    <div class="col-sm-10">
+        <p>
+            {{ result.person }}
+        </p>
+    </div>
+</div>
+{% endif %}
+
+{% if result.competition %}
+<div class="row">
+    <div class="col-sm-2">
+        <p>
+            <strong>
+                Competition
+            </strong>
+        </p>
+    </div>
+    <div class="col-sm-10">
+        <p>
+            {{ result.competition }}
+        </p>
+    </div>
+</div>
+{% endif %}
+
+{% if result.event %}
+<div class="row">
+    <div class="col-sm-2">
+        <p>
+            <strong>
+                Event
+            </strong>
+        </p>
+    </div>
+    <div class="col-sm-10">
+        <p>
+            {{ result.event }}
+        </p>
+    </div>
+</div>
+{% endif %}
+
+{% if result.round_type %}
+<div class="row">
+    <div class="col-sm-2">
+        <p>
+            <strong>
+                Round Type
+            </strong>
+        </p>
+    </div>
+    <div class="col-sm-10">
+        <p>
+            {{ result.round_type }}
+        </p>
+    </div>
+</div>
+{% endif %}
+
+{% if result.pos %}
+<div class="row">
+    <div class="col-sm-2">
+        <p>
+            <strong>
+                Position
+            </strong>
+        </p>
+    </div>
+    <div class="col-sm-10">
+        <p>
+            {{ result.pos }}
+        </p>
+    </div>
+</div>
+{% endif %}
+
+{% if result.best %}
+<div class="row">
+    <div class="col-sm-2">
+        <p>
+            <strong>
+                Best Single
+            </strong>
+        </p>
+    </div>
+    <div class="col-sm-10">
+        <p>
+            {{ result.best }}
+        </p>
+    </div>
+</div>
+{% endif %}
+
+{% if result.average %}
+<div class="row">
+    <div class="col-sm-2">
+        <p>
+            <strong>
+                Average
+            </strong>
+        </p>
+    </div>
+    <div class="col-sm-10">
+        <p>
+            {{ result.average }}
+        </p>
+    </div>
+</div>
+{% endif %}
+
+{% if result.value1 and result.value2 and result.value3 %}
+<div class="row">
+    <div class="col-sm-2">
+        <p>
+            <strong>
+                Times
+            </strong>
+        </p>
+    </div>
+    <div class="col-sm-2">
+        <p>
+            {{ result.value1 }}
+        </p>
+    </div>
+    <div class="col-sm-2">
+        <p>
+            {{ result.value2 }}
+        </p>
+    </div>
+    <div class="col-sm-2">
+        <p>
+            {{ result.value3 }}
+        </p>
+    </div>
+    <div class="col-sm-2">
+        <p>
+            {{ result.value4 }}
+        </p>
+    </div>
+    <div class="col-sm-2">
+        <p>
+            {{ result.value5 }}
+        </p>
+    </div>
+</div>
+{% endif %}
+<hr/>
+<h5>
+    Notes:
+</h5>
+<ul>
+    <li>
+        Results for timed events are in centiseconds
+    </li>
+    <li>
+        -1 means DNF (did not finish)
+    </li>
+    <li>
+        -2 means DNS (did not start)
+    </li>
+    <li>
+        0 means no result
+    </li>
+    <li>
+        See the results section of the
+        <a href="https://www.worldcubeassociation.org/results/misc/export.html">
+            WCA database export documentation
+        </a>
+        for how to decode MultiBLD and FMC results
+    </li>
+</ul>
+{% endblock content %}

@@ -1,0 +1,50 @@
+{% extends 'wca/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+  <header>
+    <h2>Person Update</h2>
+  </header>
+
+  <form method="post" novalidate>
+  {% csrf_token %}
+
+    <div class="row">
+      <div class="col-sm-6">
+        {{ form.person_identifier|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        {{ form.person_name|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        {{ form.country|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        {{ form.gender|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        {{ form.competition|as_crispy_field }}
+      </div>
+    </div>
+
+  <button type="submit" class="btn btn-outline-success">Update</button>
+
+  <a class="btn btn-outline-secondary" href="{% url 'people' %}">cancel</a>  
+
+</form>
+
+{% endblock content %}

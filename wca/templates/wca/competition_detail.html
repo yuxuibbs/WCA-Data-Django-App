@@ -1,0 +1,196 @@
+{% extends 'wca/base.html' %}
+
+{% block content %}
+<header>
+    <h2>
+        {{ competition.competition_name | safe }}
+    </h2>
+</header>
+
+{% if competition.competition_name %}
+<div class="row">
+    <div class="col-sm-2">
+        <p>
+            <strong>
+                Competition Name
+            </strong>
+        </p>
+    </div>
+    <div class="col-sm-10">
+        <p>
+            {{ competition.competition_name }}
+        </p>
+    </div>
+</div>
+{% endif %}
+
+{% if competition.city_name %}
+<div class="row">
+    <div class="col-sm-2">
+        <p>
+            <strong>
+                City
+            </strong>
+        </p>
+    </div>
+    <div class="col-sm-10">
+        <p>
+            {{ competition.city_name }}
+        </p>
+    </div>
+</div>
+{% endif %}
+
+{% if competition.country %}
+<div class="row">
+    <div class="col-sm-2">
+        <p>
+            <strong>
+                Country
+            </strong>
+        </p>
+    </div>
+    <div class="col-sm-10">
+        <p>
+            {{ competition.country }}
+        </p>
+    </div>
+</div>
+{% endif %}
+
+{% if competition.information %}
+<div class="row">
+    <div class="col-sm-2">
+        <p>
+            <strong>
+                Information
+            </strong>
+        </p>
+    </div>
+    <div class="col-sm-10">
+        <p>
+            {{ competition.information }}
+        </p>
+    </div>
+</div>
+{% endif %}
+
+{% if competition.year and competition.month and competition.day %}
+<div class="row">
+    <div class="col-sm-2">
+        <p>
+            <strong>
+                Competition start date
+            </strong>
+        </p>
+    </div>
+    <div class="col-sm-10">
+        <p>
+            {{ competition.month }}/{{ competition.day }}/{{ competition.year }}
+        </p>
+    </div>
+</div>
+{% endif %}
+
+{% if competition.end_month and competition.end_day %}
+<div class="row">
+    <div class="col-sm-2">
+        <p>
+            <strong>
+                End date
+            </strong>
+        </p>
+    </div>
+    <div class="col-sm-10">
+        <p>
+            {{ competition.end_month }}/{{ competition.end_day }}
+        </p>
+    </div>
+</div>
+{% endif %}
+
+{% if competition.event_specs %}
+<div class="row">
+    <div class="col-sm-2">
+        <p>
+            <strong>
+                Events
+            </strong>
+        </p>
+    </div>
+    <div class="col-sm-10">
+        <p>
+            {{ competition.event_specs }}
+        </p>
+    </div>
+</div>
+{% endif %}
+
+{% if competition.venue_address %}
+<div class="row">
+    <div class="col-sm-2">
+        <p>
+            <strong>
+                Venue Address
+            </strong>
+        </p>
+    </div>
+    <div class="col-sm-10">
+        <p>
+            {{ competition.venue_address }}
+        </p>
+    </div>
+</div>
+{% endif %}
+
+{% if competition.venue_details %}
+<div class="row">
+    <div class="col-sm-2">
+        <p>
+            <strong>
+                Venue Details
+            </strong>
+        </p>
+    </div>
+    <div class="col-sm-10">
+        <p>
+            {{ competition.venue_details }}
+        </p>
+    </div>
+</div>
+{% endif %}
+
+{% if competition.latitude %}
+<div class="row">
+    <div class="col-sm-2">
+        <p>
+            <strong>
+                Latitude
+            </strong>
+        </p>
+    </div>
+    <div class="col-sm-10">
+        <p>
+            {{ competition.latitude }}
+        </p>
+    </div>
+</div>
+{% endif %}
+
+{% if competition.longitude %}
+<div class="row">
+    <div class="col-sm-2">
+        <p>
+            <strong>
+                Longitude
+            </strong>
+        </p>
+    </div>
+    <div class="col-sm-10">
+        <p>
+            {{ competition.longitude }}
+        </p>
+    </div>
+</div>
+{% endif %}
+{% endblock content %}

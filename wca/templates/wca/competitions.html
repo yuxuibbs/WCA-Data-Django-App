@@ -1,0 +1,29 @@
+{% extends 'wca/base.html' %}
+
+{% block content %}
+
+<article>
+  <header>
+        <h2>All official WCA competitions</h2>
+  </header>
+
+  {% include 'wca/pagination.html' %}
+
+  {% if competitions %}
+  <ul>
+
+    {% for competition in competitions %}
+      <li>
+        <a href="{% url 'competition_detail' competition.pk %}">{{ competition.competition_name | safe }}</a>
+      </li>
+    {% endfor %}
+
+  </ul>
+  {% else %}
+  <p>No competitions are available to view.</p>
+  {% endif %}
+
+  <p>page count: {{ competitions.count }}</p>
+</article>
+
+{% endblock content %}

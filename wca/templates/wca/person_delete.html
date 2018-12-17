@@ -1,0 +1,13 @@
+{% extends 'wca/base.html' %}
+
+{% block content %}
+
+  <form method="post">
+    {% csrf_token %}
+    <p>Are you sure you want to delete the competitor "{{ person.person_name }}" with the WCA ID {{ person.person_identifier }}?</p>
+    <button type="submit" class="btn btn-outline-danger">delete</button>
+    <a class="btn btn-outline-secondary" href="{% url 'person' person.pk 
+    %}">cancel</a>
+  </form>
+
+{% endblock content %}

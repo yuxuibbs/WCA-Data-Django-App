@@ -1,0 +1,121 @@
+{% extends 'wca/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+  <header>
+    <h2>New Person/Competitor</h2>
+  </header>
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+
+    <div class="row">
+      <div class="col-sm-6">
+        {{ personForm.person_identifier|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        {{ personForm.person_name|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        {{ personForm.country|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        {{ personForm.gender|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        {{ resultForm.competition|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        {{ resultForm.event|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        {{ resultForm.round_type|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        {{ resultForm.pos|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        {{ resultForm.best|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        {{ resultForm.average|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        {{ resultForm.event_format|as_crispy_field }}
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-sm-6">
+        {{ resultForm.person|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        {{ resultForm.value1|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        {{ resultForm.value2|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        {{ resultForm.value3|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        {{ resultForm.value4|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        {{ resultForm.value5|as_crispy_field }}
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-outline-success">Add</button>
+    &nbsp;<a class="btn btn-outline-secondary" href="{% url 'people' %}">cancel</a>
+  </form>
+
+{% endblock content %}
+
