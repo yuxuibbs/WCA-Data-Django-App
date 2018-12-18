@@ -189,7 +189,10 @@ class Result(models.Model):
         verbose_name_plural = 'Results'
 
     def __str__(self):
-        return "Event: {} | Position: {} | Name: {} | Attempt 1: {} | Attempt 2: {} | Attempt 3: {} | Attempt 4: {} | Attempt 5: {} | Average: {}| Best: {}".format(self.event, self.pos, self.person_name, self.result1, self.result2, self.result3, self.result4, self.result5, self.average, self.best)
+        return "Event: {} | Position: {} | Name: {} | Attempt 1: {} | Attempt 2: {} | Attempt 3: {} | Attempt 4: {} | Attempt 5: {} | Average: {}| Best: {}".format(self.event, self.pos, self.person_name, self.value1, self.value2, self.value3, self.value4, self.value5, self.average, self.best)
+    
+    def get_absolute_url(self):
+        return reverse('result_detail', kwargs={'pk': self.pk})
 
 
 class RankAverage(models.Model):

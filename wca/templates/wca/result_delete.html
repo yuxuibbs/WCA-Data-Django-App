@@ -4,7 +4,7 @@
 <form method="post">
     {% csrf_token %}
     <p>
-        Are you sure you want to delete {{ person_name }}'s result "{{ average }}" for the competition "{{ competition }}"?
+        Are you sure you want to delete <strong>{{ result.person_name }}</strong>'s result with an average of <strong>{{ result.average }}</strong> for the competition <strong>{{ result.competition }}</strong>?
     </p>
     <button class="btn btn-outline-danger" type="submit">
         delete

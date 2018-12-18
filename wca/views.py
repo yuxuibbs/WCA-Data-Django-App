@@ -64,7 +64,7 @@ class ResultCreateView(generic.View):
         if form.is_valid():
             result_info = form.save(commit=False)
             result_info.save()
-            Result.objects.create(result=result_info)
+            Result.objects.create(competition_id=result_info.competition_id, event_id=result_info.event_id, round_type_id=result_info.round_type_id, pos=result_info.pos, best=result_info.best, average=result_info.average, person_name=result_info.person_name, person_id=result_info.person_id, event_format_id=result_info.event_format_id, value1=result_info.value1, value2=result_info.value2, value3=result_info.value3, value4=result_info.value4, value5=result_info.value5)
             return HttpResponseRedirect(result_info.get_absolute_url())
         return render(request, 'wca/result_new.html', {'form': form})
 
@@ -86,33 +86,6 @@ class ResultUpdateView(generic.UpdateView):
     def form_valid(self, form):
         result_info = form.save(commit=False)
         result_info.save()
-
-        old_ids = Result.objects\
-            .values_list('result_id', flat=True)\
-            .filter(result_id=result_info.result_id)
-
-        new_competitions = form.cleaned_data['competition']
-        new_events = form.cleaned_data['event']
-
-        new_ids = []
-
-        for competition in new_competitions:
-            new_id = competition.competition_id
-            new_ids.append(new_id)
-            if new_id in old_ids:
-                continue
-            else:
-                Result.objects \
-                    .create(result=result_info, competition=competition)
-
-        for old_id in old_ids:
-            if old_id in new_ids:
-                continue
-            else:
-                Result.objects \
-                    .filter(result_id=result_info.result_id, competition_id=old_id) \
-                    .delete()
-
         return HttpResponseRedirect(result_info.get_absolute_url())
 
 @method_decorator(login_required, name='dispatch')
@@ -172,31 +145,6 @@ class PersonUpdateView(generic.UpdateView):
         person_info = form.save(commit=False)
         person_info.save()
 
-        old_ids = Result.objects\
-            .values_list('person_id', flat=True)\
-            .filter(person_id=person_info.person_id)
-
-        new_competitions = form.cleaned_data['competition']
-
-        new_ids = []
-
-        for competition in new_competitions:
-            new_id = competition.competition_id
-            new_ids.append(new_id)
-            if new_id in old_ids:
-                continue
-            else:
-                Result.objects \
-                    .create(person=person_info, competition=competition)
-
-        for old_id in old_ids:
-            if old_id in new_ids:
-                continue
-            else:
-                Result.objects \
-                    .filter(person_id=person_info.person_id, competition_id=old_id) \
-                    .delete()
-
         return HttpResponseRedirect(person_info.get_absolute_url())
 
 @method_decorator(login_required, name='dispatch')
@@ -213,9 +161,8 @@ class PersonDeleteView(generic.DeleteView):
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
 
-        Result.objects \
-            .filter(person_id=self.object.person_id) \
-            .delete()
+        Result.objects.filter(person_id=self.object.person_id).delete()
+        Person.objects.filter(person_id=self.object.person_id).delete()
 
         self.object.delete()
 

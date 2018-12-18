@@ -1,5 +1,10 @@
 # WCA Data Django Application for SI 664 Fall 2018
 
+Notes: 
+
+* filters and forms can take a while to load and update
+* sql dump file is ~200MB
+* the sql file that turns the database export into a relational database can take ~30 hours to run
 
 ## Purpose
 Explore the data that is in the World Cube Association results database export

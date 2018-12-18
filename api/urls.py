@@ -3,6 +3,7 @@ from rest_framework.documentation import include_docs_urls
 from rest_framework.routers import SimpleRouter
 from rest_framework_swagger.views import get_swagger_view
 from api.views import ResultViewSet
+from api.views import PersonViewSet
 
 API_TITLE = 'WCA API'
 API_DESC = 'A web API for creating, modifying and deleting World Cube Association (WCA) data.'
@@ -17,7 +18,8 @@ schema_view = get_swagger_view(title=API_TITLE)
 
 # Default view
 router = SimpleRouter()
-router.register(r'wca', ResultViewSet, base_name='wca')
+router.register(r'results', ResultViewSet, base_name='results')
+router.register(r'persons', PersonViewSet, base_name='persons')
 
 # The API URLs are now determined automatically by the router.
 urlpatterns = [
