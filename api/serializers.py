@@ -38,6 +38,11 @@ class CompetitionSerializer(serializers.ModelSerializer):
         fields = ('competition_id', 'competition_identifier', 'competition_name', 'city_name', 'country_id', 'information', 'year', 'month', 'day', 'end_month', 'end_day', 'event_specs', 'wca_delegate', 'organiser', 'venue', 'venue_address', 'venue_details', 'external_website', 'latitude', 'longitude')
 
 
+class ResultSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Result
+        fields = ('result_id', 'competition_id', 'event_id', 'round_type_id', 'pos', 'best', 'average', 'person_name', 'person_id', 'event_format_id', 'value1', 'value2', 'value3', 'value4', 'value5', 'regional_single_record', 'regional_average_record')
+
 class PersonSerializer(serializers.ModelSerializer):
     person_identifier = serializers.CharField(
         allow_blank=False,
@@ -53,6 +58,7 @@ class PersonSerializer(serializers.ModelSerializer):
         read_only=True
     )
     country_id = serializers.PrimaryKeyRelatedField(
+        allow_null=False,
         many=False,
         write_only=True,
         queryset=Country.objects.all(),
@@ -63,70 +69,45 @@ class PersonSerializer(serializers.ModelSerializer):
         allow_null=True,
         max_length=1
     )
-    competition = serializers.PrimaryKeyRelatedField(
+    result = ResultSerializer(
+        source='result_set',
         many=True,
+        read_only=True
+    )
+    result_ids = serializers.PrimaryKeyRelatedField(
+        many=True,
+        write_only=True,
         queryset=Result.objects.all(),
         source='result'
     )
 
     class Meta:
         model = Person
-        fields = ('person_id', 'person_identifier', 'person_name', 'country_id', 'gender')
+        fields = ('person_id', 'person_identifier', 'person_name', 'country', 'country_id', 'gender', 'result', 'result_ids')
 
     def create(self, validated_data):
+        results = validated_data.pop('result')
         person = Person.objects.create(**validated_data)
+
+        if results is not None:
+            for result in results:
+                Result.objects.create(competition_id=result.competition_id, event_id=result.event_id, round_type_id=result.round_type_id, pos=result.pos, best=result.best, average=result.average, person_name=result.person_name, person_id=person.person_id, event_format_id=result.event_format_id, value1=result.value1, value2=result.value2, value3=result.value3, value4=result.value4, value5=result.value5)
+
         return person
+
 
     def update(self, instance, validated_data):
         instance.person_identifier = validated_data.get('person_identifier', instance.person_identifier)
         instance.person_name = validated_data.get('person_name', instance.person_name)
         instance.country_id = validated_data.get('country_id', instance.country_id)
         instance.gender = validated_data.get('gender', instance.gender)
-        instance.save()
-        return instance
 
+        old_country_id = Person.objects.filter(person_id=instance.person_id)[0].country_id
+        new_country_name = validated_data.pop('country')
+        new_country_id = Country.objects.filter(country_name=new_country_name)[0].country_id
+        if old_country_id != new_country_id:
+            instance.country_id = new_country_id
 
-
-class ResultSerializer(serializers.ModelSerializer):
-    competition_id = CompetitionSerializer(many=False)
-    event_id = EventSerializer(many=False)
-    round_type_id = RoundTypeSerializer(many=False)
-    pos = serializers.IntegerField()
-    best = serializers.IntegerField()
-    average = serializers.IntegerField()
-    person_name = serializers.CharField(max_length=80, allow_blank=True, allow_null=True)
-    person_id = PersonSerializer(many=True)
-    event_format_id = EventFormatSerializer(many=False)
-    value1 = serializers.IntegerField()
-    value2 = serializers.IntegerField()
-    value3 = serializers.IntegerField()
-    value4 = serializers.IntegerField()
-    value5 = serializers.IntegerField()
-
-    class Meta:
-        model = Result
-        fields = ('result_id', 'competition_id', 'event_id', 'round_type_id', 'pos', 'best', 'average', 'person_name', 'person_id', 'event_format_id', 'value1', 'value2', 'value3', 'value4', 'value5', 'regional_single_record', 'regional_average_record')
-
-    def create(self, validated_data):
-        print(validated_data)
-        result = Result.objects.create(**validated_data)
-        return result
-
-    def update(self, instance, validated_data):
-        competition_id = validated_data.get('competition_id', instance.competition_id)
-        event_id = validated_data.get('event_id', instance.event_id)
-        round_type_id = validated_data.get('round_type_id', instance.round_type_id)
-        pos = validated_data.get('pos', instance.pos)
-        best = validated_data.get('best', instance.best)
-        average = validated_data.get('average', instance.average)
-        person_name = validated_data.get('person_name', instance.person_name)
-        person_id = validated_data.get('person_id', instance.person_id)
-        event_format_id = validated_data.get('event_format_id', instance.event_format_id)
-        value1 = validated_data.get('value1', instance.value1)
-        value2 = validated_data.get('value2', instance.value2)
-        value3 = validated_data.get('value3', instance.value3)
-        value4 = validated_data.get('value4', instance.value4)
-        value5 = validated_data.get('value5', instance.value5)
         instance.save()
         return instance
 

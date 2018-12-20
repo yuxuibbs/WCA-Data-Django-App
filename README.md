@@ -1,11 +1,5 @@
 # WCA Data Django Application for SI 664 Fall 2018
 
-Notes: 
-
-* filters and forms can take a while to load and update
-* sql dump file is ~200MB
-* the sql file that turns the database export into a relational database can take ~30 hours to run
-
 ## Purpose
 Explore the data that is in the World Cube Association results database export
 
@@ -54,5 +48,33 @@ Taken from requirements.txt
 * uritemplate
 * urllib3
 
+## Misc Notes:
+
+* filters and forms can take a while to load and update (a few minutes to maybe half an hour)
+* sql dump file is ~200MB so the sql dump is inside `.zip`
+* the sql file that turns the WCA database export into a relational database can take ~30 hours to run
+* my ID number in the application is 66687 with the WCA ID 2011CHEN54
+* GET: [http://localhost:8000/wca/api/persons/{person id number}/](http://localhost:8000/wca/api/persons/{person id number}/)
+* POST: [http://localhost:8000/wca/api/persons/](http://localhost:8000/wca/api/persons/)
+```json
+    {
+        "person_identifier": "<WCA ID>",
+        "person_name": "<person name>",
+        "country_id": <country id number>,
+        "gender": "<m. f, o, or none>",
+        "result_ids": [<result id number>]
+    }
+
+```
+* PUT: [http://localhost:8000/wca/api/persons/{person id number}/](http://localhost:8000/wca/api/persons/{person id number}/)
+```json
+    {
+        "person_identifier": "<WCA ID>",
+        "person_name": "<person name>",
+        "country_id": <country id number>,
+        "gender": "<m, f, o, or none>",
+        "result_ids": [<result id number>]
+    }
+```
 
 

@@ -18,7 +18,6 @@ schema_view = get_swagger_view(title=API_TITLE)
 
 # Default view
 router = SimpleRouter()
-router.register(r'results', ResultViewSet, base_name='results')
 router.register(r'persons', PersonViewSet, base_name='persons')
 
 # The API URLs are now determined automatically by the router.
@@ -26,5 +25,4 @@ urlpatterns = [
     path('', include(router.urls)),
     path('docs/', docs_view),
     path('swagger-docs/', schema_view)
-    # path('schema/', schema_view)
 ]
