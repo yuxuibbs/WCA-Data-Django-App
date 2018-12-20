@@ -3,10 +3,10 @@
 ## Purpose
 Explore the data that is in the World Cube Association results database export
 
-## Data set
+## Data Set
 This Django application uses the World Cube Associaion results database export, which can be found  [here](https://www.worldcubeassociation.org/results/misc/export.html). This application uses the export from 11/27/2018.
 
-## Data model
+## Data Model
 <img src="./static/img/database model.png" alt="WCA database model">
 
 ## Package Dependencies
@@ -50,13 +50,16 @@ Taken from requirements.txt
 
 ## Misc Notes:
 
-* filters and forms can take a while to load and update (a few minutes to maybe half an hour)
-* sql dump file is ~200MB so the sql dump is inside `.zip`
-* the sql file that turns the WCA database export into a relational database can take ~30 hours to run
+* all filters, forms, and api stuff can take a while to load (a few minutes to maybe half an hour) but they will eventually load
+* sql dump file is ~200MB so the sql dump is inside `yuxuanc-wca_database-dump-2018121921.zip` in `static/sql`
+* the sql script that turns the WCA database export into a relational database can take ~30 hours to run
 * my ID number in the application is 66687 with the WCA ID 2011CHEN54
-* GET: [http://localhost:8000/wca/api/persons/{person id number}/](http://localhost:8000/wca/api/persons/{person id number}/)
+
+### API endpoints
+<img src="./static/img/api_endpoints.png" alt="API endpoints">
+
 * POST: [http://localhost:8000/wca/api/persons/](http://localhost:8000/wca/api/persons/)
-```json
+```
     {
         "person_identifier": "<WCA ID>",
         "person_name": "<person name>",
@@ -66,8 +69,8 @@ Taken from requirements.txt
     }
 
 ```
-* PUT: [http://localhost:8000/wca/api/persons/{person id number}/](http://localhost:8000/wca/api/persons/{person id number}/)
-```json
+* PUT: [http://localhost:8000/wca/api/persons/{person_id_number}/](http://localhost:8000/wca/api/persons/{person_id_number}/)
+```
     {
         "person_identifier": "<WCA ID>",
         "person_name": "<person name>",
